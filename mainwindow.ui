@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>845</width>
-    <height>553</height>
+    <width>865</width>
+    <height>612</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,7 +31,7 @@
     </property>
     <widget class="QWidget" name="tabData">
      <attribute name="icon">
-      <iconset resource="test1.qrc">
+      <iconset>
        <normaloff>:/Resources/data_128x128.png</normaloff>:/Resources/data_128x128.png</iconset>
      </attribute>
      <attribute name="title">
@@ -50,7 +50,7 @@
     </widget>
     <widget class="QWidget" name="tabQuery">
      <attribute name="icon">
-      <iconset resource="test1.qrc">
+      <iconset>
        <normaloff>:/Resources/query_128x128.png</normaloff>:/Resources/query_128x128.png</iconset>
      </attribute>
      <attribute name="title">
@@ -74,7 +74,7 @@
     </widget>
     <widget class="QWidget" name="tabStructure">
      <attribute name="icon">
-      <iconset resource="test1.qrc">
+      <iconset>
        <normaloff>:/Resources/structure_256x256.png</normaloff>:/Resources/structure_256x256.png</iconset>
      </attribute>
      <attribute name="title">
@@ -98,7 +98,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>845</width>
+     <width>865</width>
      <height>22</height>
     </rect>
    </property>
@@ -156,8 +156,8 @@
       <rect>
        <x>10</x>
        <y>0</y>
-       <width>231</width>
-       <height>101</height>
+       <width>191</width>
+       <height>111</height>
       </rect>
      </property>
     </widget>
@@ -225,7 +225,7 @@
   </widget>
   <action name="actionOpen">
    <property name="icon">
-    <iconset resource="test1.qrc">
+    <iconset>
      <normaloff>:/Resources/Open_512x512.png</normaloff>:/Resources/Open_512x512.png</iconset>
    </property>
    <property name="text">
@@ -238,7 +238,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="test1.qrc"/>
+  <include location="SqliteViewer3.qrc"/>
  </resources>
  <connections/>
 </ui>

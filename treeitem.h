@@ -6,10 +6,17 @@
 #include <QIcon>
 #include <memory>
 
-//! [0]
 class TreeItem
 {
 public:
+    enum class ITEM_TYPE {
+        ITEM_ROOT = 0,
+        ITEM_TABLES = 1,
+        ITEM_TABLE = 2,
+        ITEM_VIEWERS = 3,
+        ITEM_VIEWER = 4
+    };
+
     explicit TreeItem(const std::shared_ptr<QIcon>& icon, const QList<QVariant> &data, TreeItem *parentItem = 0);
     ~TreeItem();
 
@@ -24,6 +31,8 @@ public:
     std::shared_ptr<QIcon> icon() const;
     void setSql(const QString& sql);
     QString sql() const;
+    void setType(ITEM_TYPE type);
+    ITEM_TYPE type() const;
 
 private:
     QList<TreeItem*> m_childItems;
@@ -32,6 +41,7 @@ private:
 
     std::shared_ptr<QIcon> m_icon;
     QString m_sql;
+    ITEM_TYPE m_type;
 };
 //! [0]
 

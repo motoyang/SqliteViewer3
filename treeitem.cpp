@@ -13,6 +13,16 @@ TreeItem::~TreeItem()
     qDeleteAll(m_childItems);
 }
 
+void TreeItem::setType(ITEM_TYPE type)
+{
+    m_type = type;
+}
+
+TreeItem::ITEM_TYPE TreeItem::type() const
+{
+    return m_type;
+}
+
 std::shared_ptr<QIcon> TreeItem::icon() const
 {
     return m_icon;

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QSqlDatabase>
+#include <QStandardItemModel>
 #include "treemodel.h"
 
 namespace Ui {
@@ -23,9 +24,13 @@ public:
     QSqlDatabase db;
 
     TreeModel tmTablesAndViewers;
+    QStandardItemModel simColumns, simForeignKeys, simIndexes, simTriggers;
+
 
 private slots:
     void on_actionOpen_triggered();
+
+    void on_tvTablesAndViewers_clicked(const QModelIndex &index);
 
 private:
     Ui::MainWindow *ui;

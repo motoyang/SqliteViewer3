@@ -9,7 +9,6 @@
 
 class TreeItem;
 
-//! [0]
 class TreeModel : public QAbstractItemModel
 {
     Q_OBJECT
@@ -28,13 +27,15 @@ public:
     QModelIndex parent(const QModelIndex &index) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    TreeItem* itemFromIndex(const QModelIndex& index) const;
+    TreeItem* getItem(int i) const;
+    void selectItem(const QModelIndex& index);
 
     void setupModelData(const QSqlDatabase &db);
 
 private:
-    TreeItem *rootItem;
+    TreeItem *m_rootItem, *m_currentItem;
     std::shared_ptr<QIcon> m_iconTables, m_iconViewers, m_iconTable, m_iconViewer;
 };
-//! [0]
 
 #endif // TREEMODEL_H
