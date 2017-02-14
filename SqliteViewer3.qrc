@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Resources/Open_512x512.png</file>
+        <file>Resources/run_128x128.png</file>
+        <file>Resources/structure_256x256.png</file>
+        <file>Resources/data_128x128.png</file>
+        <file>Resources/query_128x128.png</file>
+        <file>Resources/table_128x128.png</file>
+        <file>Resources/tables_128x128.png</file>
+        <file>Resources/viewer_128x128.png</file>
+        <file>Resources/viewers_128x128.png</file>
+    </qresource>
+</RCC>
