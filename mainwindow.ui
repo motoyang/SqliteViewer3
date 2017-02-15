@@ -31,7 +31,7 @@
     </property>
     <widget class="QWidget" name="tabData">
      <attribute name="icon">
-      <iconset>
+      <iconset resource="SqliteViewer3.qrc">
        <normaloff>:/Resources/data_128x128.png</normaloff>:/Resources/data_128x128.png</iconset>
      </attribute>
      <attribute name="title">
@@ -50,7 +50,7 @@
     </widget>
     <widget class="QWidget" name="tabQuery">
      <attribute name="icon">
-      <iconset>
+      <iconset resource="SqliteViewer3.qrc">
        <normaloff>:/Resources/query_128x128.png</normaloff>:/Resources/query_128x128.png</iconset>
      </attribute>
      <attribute name="title">
@@ -59,28 +59,65 @@
      <widget class="QSplitter" name="splitter">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>20</x>
         <y>10</y>
-        <width>481</width>
-        <height>261</height>
+        <width>521</width>
+        <height>271</height>
        </rect>
       </property>
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
-      <widget class="QPlainTextEdit" name="plainTextEdit"/>
-      <widget class="QTableView" name="tableView"/>
+      <widget class="QTextEdit" name="teQuery"/>
+      <widget class="QTabWidget" name="twQueryAndResult">
+       <property name="tabPosition">
+        <enum>QTabWidget::South</enum>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <widget class="QWidget" name="tab">
+        <attribute name="title">
+         <string>Tab 1</string>
+        </attribute>
+        <widget class="QTableView" name="tvQuery">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>256</width>
+           <height>91</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_2">
+        <attribute name="title">
+         <string>Tab 2</string>
+        </attribute>
+        <widget class="QPlainTextEdit" name="pteResult">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>0</y>
+           <width>104</width>
+           <height>78</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="tabStructure">
      <attribute name="icon">
-      <iconset>
+      <iconset resource="SqliteViewer3.qrc">
        <normaloff>:/Resources/structure_256x256.png</normaloff>:/Resources/structure_256x256.png</iconset>
      </attribute>
      <attribute name="title">
       <string>Structure</string>
      </attribute>
-     <widget class="QTextEdit" name="textEdit">
+     <widget class="QTextEdit" name="teStructure">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -118,6 +155,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionOpen"/>
+   <addaction name="actionExecute"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockTablesAndViews">
@@ -128,7 +166,7 @@
     <number>1</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents">
-    <widget class="QTreeView" name="tvTablesAndViewers">
+    <widget class="QTreeView" name="tvTablesAndViews">
      <property name="geometry">
       <rect>
        <x>0</x>
@@ -196,8 +234,8 @@
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>101</width>
-       <height>71</height>
+       <width>181</width>
+       <height>101</height>
       </rect>
      </property>
     </widget>
@@ -225,7 +263,7 @@
   </widget>
   <action name="actionOpen">
    <property name="icon">
-    <iconset>
+    <iconset resource="SqliteViewer3.qrc">
      <normaloff>:/Resources/Open_512x512.png</normaloff>:/Resources/Open_512x512.png</iconset>
    </property>
    <property name="text">
@@ -233,6 +271,15 @@
    </property>
    <property name="toolTip">
     <string>open an sqlite database (.db)</string>
+   </property>
+  </action>
+  <action name="actionExecute">
+   <property name="icon">
+    <iconset resource="SqliteViewer3.qrc">
+     <normaloff>:/Resources/run_128x128.png</normaloff>:/Resources/run_128x128.png</iconset>
+   </property>
+   <property name="text">
+    <string>Execute</string>
    </property>
   </action>
  </widget>
