@@ -24,15 +24,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    treeitem.cpp \
-    treemodel.cpp \
-    sqlquerymodel.cpp
+        mainwindow.cpp
 
-HEADERS  += mainwindow.h \
-    treeitem.h \
-    treemodel.h \
-    sqlquerymodel.h
+HEADERS  += mainwindow.h
 
 FORMS    += mainwindow.ui
 

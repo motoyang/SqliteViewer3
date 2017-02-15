@@ -8,10 +8,11 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    m_currentTV(nullptr)
+    ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    m_tmContext = nullptr;
+    m_currentTV = nullptr;
 }
 
 MainWindow::~MainWindow()
@@ -21,21 +22,24 @@ MainWindow::~MainWindow()
 
 bool MainWindow::init()
 {
+    // 连接Sqlite数据库
     db = QSqlDatabase::addDatabase("QSQLITE");
 
+    // 准备TreeView中的图标
     m_iconTables = QIcon(QStringLiteral(":/Resources/tables_128x128.png"));
     m_iconTable = QIcon(QStringLiteral(":/Resources/table_128x128.png"));
     m_iconViews = QIcon(QStringLiteral(":/Resources/viewers_128x128.png"));
     m_iconView = QIcon(QStringLiteral(":/Resources/viewer_128x128.png"));
 
+    // 设置每个view的model
     ui->tvTablesAndViews->setModel(&m_simTablesAndViews);
-    ui->tvColumns->setModel(&m_simColumns);
+    ui->tvColumns->setModel(&m_sqmColumns);
     ui->tvColumns->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
-    ui->tvForeignKeys->setModel(&m_simForeignKeys);
+    ui->tvForeignKeys->setModel(&m_sqmForeignKeys);
     ui->tvForeignKeys->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
-    ui->tvIndexes->setModel(&m_simIndexes);
+    ui->tvIndexes->setModel(&m_sqmIndexes);
     ui->tvIndexes->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
-    ui->tvTriggers->setModel(&m_simTriggers);
+    ui->tvTriggers->setModel(&m_sqmTriggers);
     ui->tvTriggers->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
 
     m_tmContext = new QSqlTableModel(this, db);
@@ -67,20 +71,21 @@ void MainWindow::updateContextTab()
 {
     QString name = m_currentTV->data(Qt::DisplayRole).toString();
     m_tmContext->setTable(name);
-    m_tmContext->setEditStrategy(QSqlTableModel::OnRowChange);
+    m_tmContext->setEditStrategy(QSqlTableModel::OnFieldChange);
     if (!m_tmContext->select()) {
         QSqlError e = m_tmContext->lastError();
         QString erro = e.text();
         qDebug() << erro;
         Q_ASSERT(false);
     }
+    ui->tvContext->resizeColumnsToContents();
 }
 
 void MainWindow::updateTriggers()
 {
     QString sql = QStringLiteral("select name, sql from sqlite_master where type='trigger' and tbl_name='%1'")
             .arg(m_currentTV->data(Qt::DisplayRole).toString());
-    m_simTriggers.setQuery(sql);
+    m_sqmTriggers.setQuery(sql);
     ui->tvTriggers->resizeColumnsToContents();
 }
 
@@ -104,7 +109,7 @@ void MainWindow::updateIndexes()
 
     // 根据构造的select语句，在sqlite_master中查询对应的indexes
     sql = QStringLiteral("select name, sql from sqlite_master where name in %1").arg(indexes);
-    m_simIndexes.setQuery(sql);
+    m_sqmIndexes.setQuery(sql);
 
     // 根据item的内容，resize列的宽带
     ui->tvIndexes->resizeColumnsToContents();
@@ -113,19 +118,23 @@ void MainWindow::updateIndexes()
 void MainWindow::updateForeignKeys()
 {
     QString sql = QStringLiteral("pragma foreign_key_list('%1')").arg(m_currentTV->data(Qt::DisplayRole).toString());
-    m_simForeignKeys.setQuery(sql);
+    m_sqmForeignKeys.setQuery(sql);
+    ui->tvForeignKeys->resizeColumnsToContents();
 }
 
 void MainWindow::updateColumns()
 {
-    QStringList sl;
-    sl << tr("cid") << tr("name") << tr("type") << tr("notnull") << tr("default value")
-       << tr("pk");
-//    m_simColumns.setHeaderData(0, Qt::Horizontal, tr("Name"));
-//    model->setHeaderData(1, Qt::Horizontal, tr("Salary"));
+    // 设置表头
+    m_sqmColumns.setHeaderData(0, Qt::Horizontal, tr("cid"));
+    m_sqmColumns.setHeaderData(1, Qt::Horizontal, tr("Name"));
+    m_sqmColumns.setHeaderData(2, Qt::Horizontal, tr("Type"));
+    m_sqmColumns.setHeaderData(3, Qt::Horizontal, tr("Not null"));
+    m_sqmColumns.setHeaderData(4, Qt::Horizontal, tr("Default value"));
+    m_sqmColumns.setHeaderData(5, Qt::Horizontal, tr("PK"));
 
     QString sql = QStringLiteral("pragma table_info ('%1')").arg(m_currentTV->data(Qt::DisplayRole).toString());
-    m_simColumns.setQuery(sql);
+    m_sqmColumns.setQuery(sql);
+    ui->tvColumns->resizeColumnsToContents();
 }
 
 void MainWindow::updateTablesAndViewersModel()
@@ -159,8 +168,9 @@ void MainWindow::updateTablesAndViewersModel()
         } else {
             Q_ASSERT(false);
         }
-
     }
+
+    ui->tvTablesAndViews->resizeColumnToContents(0);
 }
 
 bool MainWindow::openDb(const QString &name)
@@ -169,7 +179,6 @@ bool MainWindow::openDb(const QString &name)
     if (db.isOpen()) {
         db.close();
     }
-//    tmTablesAndViewers.initRoot();
 
     db.setDatabaseName(name);
     if (!db.open()) {
@@ -178,7 +187,6 @@ bool MainWindow::openDb(const QString &name)
     }
 
     updateTablesAndViewersModel();
-//    tmTablesAndViewers.setupModelData(db);
 
     return ret;
 }
@@ -186,7 +194,6 @@ bool MainWindow::openDb(const QString &name)
 void MainWindow::on_actionOpen_triggered()
 {
     openDb("/Users/moto2yang/cpp/qt/test1/db/Sakila.db");
-//    ui->tvTablesAndViewers->setModel(&tmTablesAndViewers);
 }
 
 void MainWindow::on_tvTablesAndViews_clicked(const QModelIndex &index)
@@ -210,20 +217,30 @@ void MainWindow::on_tvTablesAndViews_clicked(const QModelIndex &index)
 
 void MainWindow::on_actionExecute_triggered()
 {
+    // 根据用户的输入，查询数据库
     QString sql = ui->teQuery->toPlainText();
     m_sqmQuery.setQuery(sql);
     while (m_sqmQuery.canFetchMore()) {
           m_sqmQuery.fetchMore();
     }
 
+    // 清空result页面的内容
+    ui->pteResult->clear();
+
+    // 显示affected rows number.
+    int rows = m_sqmQuery.rowCount();
+    sql = QStringLiteral("%1 row(s) affected.").arg(rows);
+    ui->pteResult->appendPlainText(sql);
+
+    // 判断执行结果，如果失败，在result页面输出失败信息，并切换到result页面
     QSqlError err = m_sqmQuery.lastError();
     if (err.isValid()) {
         QString e = err.text();
         qDebug() << e;
-        ui->pteResult->setWindowTitle(e);
-//        emit ui->twQueryAndResult->tabBarClicked(1);
-        ui->twQueryAndResult->setCurrentWidget(ui->pteResult);
+        ui->pteResult->appendPlainText(e);
+        ui->twQueryAndResult->setCurrentIndex(1);
+    } else {
+        ui->twQueryAndResult->setCurrentIndex(0);
+        ui->tvQuery->resizeColumnsToContents();
     }
-
-    ui->tvQuery->resizeColumnsToContents();
 }

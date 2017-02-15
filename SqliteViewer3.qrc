@@ -9,5 +9,7 @@
         <file>Resources/tables_128x128.png</file>
         <file>Resources/viewer_128x128.png</file>
         <file>Resources/viewers_128x128.png</file>
+        <file>Resources/recordset_128x128.png</file>
+        <file>Resources/sqlresult_128x128.png</file>
     </qresource>
 </RCC>
