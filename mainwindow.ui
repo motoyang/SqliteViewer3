@@ -33,7 +33,7 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabArea">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tabData">
        <attribute name="icon">
@@ -57,7 +57,11 @@
          <number>1</number>
         </property>
         <item row="0" column="0">
-         <widget class="QTableView" name="tvContext"/>
+         <widget class="QTableView" name="tvContext">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -233,6 +237,9 @@
      </property>
      <item row="0" column="0">
       <widget class="QTreeView" name="tvTablesAndViews">
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
        <property name="headerHidden">
         <bool>true</bool>
        </property>
@@ -263,7 +270,14 @@
       <number>1</number>
      </property>
      <item row="0" column="0">
-      <widget class="QTableView" name="tvColumns"/>
+      <widget class="QTableView" name="tvColumns">
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -290,7 +304,14 @@
       <number>1</number>
      </property>
      <item row="0" column="0">
-      <widget class="QTableView" name="tvForeignKeys"/>
+      <widget class="QTableView" name="tvForeignKeys">
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -317,7 +338,14 @@
       <number>1</number>
      </property>
      <item row="0" column="0">
-      <widget class="QTableView" name="tvIndexes"/>
+      <widget class="QTableView" name="tvIndexes">
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -344,7 +372,14 @@
       <number>1</number>
      </property>
      <item row="0" column="0">
-      <widget class="QTableView" name="tvTriggers"/>
+      <widget class="QTableView" name="tvTriggers">
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+      </widget>
      </item>
     </layout>
    </widget>

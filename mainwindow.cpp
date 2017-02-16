@@ -1,6 +1,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlRecord>
+#include <QFileDialog>
 #include <QDebug>
 #include <QSqlError>
 #include "mainwindow.h"
@@ -178,6 +179,19 @@ bool MainWindow::openDb(const QString &name)
     bool ret = true;
     if (db.isOpen()) {
         db.close();
+
+        m_sqmColumns.clear();
+        m_sqmForeignKeys.clear();
+        m_sqmIndexes.clear();
+        m_sqmTriggers.clear();
+
+        m_tmContext->clear();
+        m_sqmQuery.clear();
+        ui->pteResult->clear();
+        ui->teQuery->clear();
+        ui->teStructure->clear();
+
+        ui->twQueryAndResult->setCurrentIndex(0);
     }
 
     db.setDatabaseName(name);
@@ -193,7 +207,12 @@ bool MainWindow::openDb(const QString &name)
 
 void MainWindow::on_actionOpen_triggered()
 {
-    openDb("/Users/moto2yang/cpp/qt/test1/db/Sakila.db");
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Open Image"), QDir::homePath(),
+        tr("Database (*.db);;Images (*.png *.xpm *.jpg);;Text files (*.txt);;XML files (*.xml)"));
+
+    openDb(fileName);
+//    openDb("/Users/moto2yang/cpp/qt/db/Sakila.db");
 }
 
 void MainWindow::on_tvTablesAndViews_clicked(const QModelIndex &index)
@@ -220,9 +239,9 @@ void MainWindow::on_actionExecute_triggered()
     // 根据用户的输入，查询数据库
     QString sql = ui->teQuery->toPlainText();
     m_sqmQuery.setQuery(sql);
-    while (m_sqmQuery.canFetchMore()) {
-          m_sqmQuery.fetchMore();
-    }
+//    while (m_sqmQuery.canFetchMore()) {
+//          m_sqmQuery.fetchMore();
+//    }
 
     // 清空result页面的内容
     ui->pteResult->clear();
