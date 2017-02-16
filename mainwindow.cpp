@@ -50,6 +50,9 @@ bool MainWindow::init()
     ui->tvQuery->setModel(&m_sqmQuery);
     ui->tvQuery->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
 
+    // 初始状态是disabled
+    ui->actionExecute->setEnabled(false);
+
     return true;
 }
 
@@ -207,11 +210,13 @@ bool MainWindow::openDb(const QString &name)
 
 void MainWindow::on_actionOpen_triggered()
 {
+    setCursor(Qt::WaitCursor);
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open Image"), QDir::homePath(),
         tr("Database (*.db);;Images (*.png *.xpm *.jpg);;Text files (*.txt);;XML files (*.xml)"));
 
     openDb(fileName);
+    unsetCursor();
 //    openDb("/Users/moto2yang/cpp/qt/db/Sakila.db");
 }
 
@@ -261,5 +266,15 @@ void MainWindow::on_actionExecute_triggered()
     } else {
         ui->twQueryAndResult->setCurrentIndex(0);
         ui->tvQuery->resizeColumnsToContents();
+    }
+}
+
+void MainWindow::on_tabArea_currentChanged(int index)
+{
+    // 如果当前tab是query tab，激活execute action。
+    if (db.isOpen() && index == 1) {
+        ui->actionExecute->setEnabled(true);
+    } else {
+        ui->actionExecute->setEnabled(false);
     }
 }

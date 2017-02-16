@@ -26,6 +26,8 @@ private slots:
     void on_tvTablesAndViews_clicked(const QModelIndex &index);
     void on_actionExecute_triggered();
 
+    void on_tabArea_currentChanged(int index);
+
 private:
     Ui::MainWindow *ui;
 
