@@ -24,11 +24,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    jsonreader.cpp \
+    plistreader.cpp \
+    mainframe.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    jsonreader.h \
+    plistreader.h \
+    mainframe.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    mainframe.ui
 
 RESOURCES += \
     SqliteViewer3.qrc
