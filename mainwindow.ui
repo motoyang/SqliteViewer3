@@ -201,7 +201,18 @@
     </property>
     <addaction name="actionOpen"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionTablesViews"/>
+    <addaction name="actionColumnsView"/>
+    <addaction name="actionIndexesView"/>
+    <addaction name="actionForigenKeysView"/>
+    <addaction name="actionTriggersView"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuView"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -211,6 +222,13 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionOpen"/>
+   <addaction name="separator"/>
+   <addaction name="actionTablesViews"/>
+   <addaction name="actionColumnsView"/>
+   <addaction name="actionForigenKeysView"/>
+   <addaction name="actionIndexesView"/>
+   <addaction name="actionTriggersView"/>
+   <addaction name="separator"/>
    <addaction name="actionExecute"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -384,6 +402,19 @@
     </layout>
    </widget>
   </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionJsonFrame"/>
+   <addaction name="actionPlistFrame"/>
+  </widget>
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="SqliteViewer3.qrc">
@@ -403,6 +434,99 @@
    </property>
    <property name="text">
     <string>Execute</string>
+   </property>
+  </action>
+  <action name="actionColumnsView">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="SqliteViewer3.qrc">
+     <normaloff>:/Resources/colunm_view_128x128.png</normaloff>:/Resources/colunm_view_128x128.png</iconset>
+   </property>
+   <property name="text">
+    <string>ColumnsView</string>
+   </property>
+  </action>
+  <action name="actionIndexesView">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="SqliteViewer3.qrc">
+     <normaloff>:/Resources/index_view_128x128.png</normaloff>:/Resources/index_view_128x128.png</iconset>
+   </property>
+   <property name="text">
+    <string>IndexesView</string>
+   </property>
+  </action>
+  <action name="actionForigenKeysView">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="SqliteViewer3.qrc">
+     <normaloff>:/Resources/fk_view_128x128.png</normaloff>:/Resources/fk_view_128x128.png</iconset>
+   </property>
+   <property name="text">
+    <string>ForigenKeysView</string>
+   </property>
+  </action>
+  <action name="actionTriggersView">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="SqliteViewer3.qrc">
+     <normaloff>:/Resources/trigger_view_128x128.png</normaloff>:/Resources/trigger_view_128x128.png</iconset>
+   </property>
+   <property name="text">
+    <string>TriggersView</string>
+   </property>
+  </action>
+  <action name="actionTablesViews">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="SqliteViewer3.qrc">
+     <normaloff>:/Resources/tables_views_128x128.png</normaloff>:/Resources/tables_views_128x128.png</iconset>
+   </property>
+   <property name="text">
+    <string>TablesViews</string>
+   </property>
+  </action>
+  <action name="actionJsonFrame">
+   <property name="icon">
+    <iconset resource="SqliteViewer3.qrc">
+     <normaloff>:/Resources/json_frame_128x128.png</normaloff>:/Resources/json_frame_128x128.png</iconset>
+   </property>
+   <property name="text">
+    <string>JsonFrame</string>
+   </property>
+  </action>
+  <action name="actionPlistFrame">
+   <property name="icon">
+    <iconset resource="SqliteViewer3.qrc">
+     <normaloff>:/Resources/plist_frame_128x128.png</normaloff>:/Resources/plist_frame_128x128.png</iconset>
+   </property>
+   <property name="text">
+    <string>PlistFrame</string>
    </property>
   </action>
  </widget>

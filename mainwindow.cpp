@@ -6,6 +6,7 @@
 #include <QSqlError>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "treeandeditform.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -208,14 +209,54 @@ bool MainWindow::openDb(const QString &name)
     return ret;
 }
 
+bool MainWindow::openJson(const QString &name)
+{
+//    if (!m_jsonFrame) {
+//        m_jsonFrame = new MainFrame();
+//        m_jsonFrame->init(name);
+//    }
+//    m_jsonFrame->show();
+
+    auto *j = new TreeAndEditForm();
+    j->init(name);
+    j->show();
+
+    return true;
+}
+
+bool MainWindow::openPlist(const QString &name)
+{
+//    if (!m_plistFrame) {
+//        m_plistFrame = new MainFrame();
+//        m_plistFrame->init(name);
+//    }
+//    m_plistFrame->show();
+
+    auto *j = new TreeAndEditForm();
+    j->init(name);
+    j->show();
+
+    return true;
+}
+
 void MainWindow::on_actionOpen_triggered()
 {
     setCursor(Qt::WaitCursor);
     QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Open Image"), QDir::homePath(),
-        tr("Database (*.db);;Images (*.png *.xpm *.jpg);;Text files (*.txt);;XML files (*.xml)"));
+        tr("Open file (.db, .json or .plist"), QDir::homePath(),
+        tr("Sqlite3 database (*.db);;Json file (*.json);;Plist files (*.plist)"));
 
-    openDb(fileName);
+    QString fileSuffix = QFileInfo(fileName).suffix().toLower();
+    if (fileSuffix == QStringLiteral("db")) {
+        openDb(fileName);
+    } else if (fileSuffix == QStringLiteral("json")) {
+        openJson(fileName);
+    } else if (fileSuffix == QStringLiteral("plist")) {
+        openPlist(fileName);
+    } else {
+        Q_ASSERT(false);
+    }
+
     unsetCursor();
 //    openDb("/Users/moto2yang/cpp/qt/db/Sakila.db");
 }
@@ -277,4 +318,63 @@ void MainWindow::on_tabArea_currentChanged(int index)
     } else {
         ui->actionExecute->setEnabled(false);
     }
+}
+
+void MainWindow::hideOrShow(QWidget *w)
+{
+    if (w->isHidden()) {
+        w->show();
+    } else {
+        w->hide();
+    }
+}
+
+void MainWindow::on_actionColumnsView_triggered()
+{
+    hideOrShow(ui->dockColumns);
+}
+
+void MainWindow::on_actionTablesViews_triggered()
+{
+    hideOrShow(ui->dockTablesAndViews);
+}
+
+void MainWindow::on_actionIndexesView_triggered()
+{
+    hideOrShow(ui->dockIndexes);
+}
+
+void MainWindow::on_actionForigenKeysView_triggered()
+{
+    hideOrShow(ui->dockForeignKeys);
+}
+
+void MainWindow::on_actionTriggersView_triggered()
+{
+    hideOrShow(ui->dockTriggers);
+}
+
+void MainWindow::on_dockTablesAndViews_visibilityChanged(bool visible)
+{
+    ui->actionTablesViews->setChecked(visible);
+}
+
+void MainWindow::on_dockColumns_visibilityChanged(bool visible)
+{
+    ui->actionColumnsView->setChecked(visible);
+}
+
+void MainWindow::on_dockForeignKeys_visibilityChanged(bool visible)
+{
+    ui->actionForigenKeysView->setChecked(visible);
+}
+
+void MainWindow::on_dockIndexes_visibilityChanged(bool visible)
+{
+    ui->actionIndexesView->setChecked(visible);
+}
+
+void MainWindow::on_dockTriggers_visibilityChanged(bool visible)
+{
+    ui->actionTriggersView->setChecked(visible);
 }

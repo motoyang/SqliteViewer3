@@ -11,5 +11,12 @@
         <file>Resources/viewers_128x128.png</file>
         <file>Resources/recordset_128x128.png</file>
         <file>Resources/sqlresult_128x128.png</file>
+        <file>Resources/colunm_view_128x128.png</file>
+        <file>Resources/fk_view_128x128.png</file>
+        <file>Resources/index_view_128x128.png</file>
+        <file>Resources/trigger_view_128x128.png</file>
+        <file>Resources/tables_views_128x128.png</file>
+        <file>Resources/json_frame_128x128.png</file>
+        <file>Resources/plist_frame_128x128.png</file>
     </qresource>
 </RCC>

@@ -25,8 +25,17 @@ private slots:
     void on_actionOpen_triggered();
     void on_tvTablesAndViews_clicked(const QModelIndex &index);
     void on_actionExecute_triggered();
-
     void on_tabArea_currentChanged(int index);
+    void on_actionColumnsView_triggered();
+    void on_actionTablesViews_triggered();
+    void on_actionIndexesView_triggered();
+    void on_actionForigenKeysView_triggered();
+    void on_actionTriggersView_triggered();
+    void on_dockTablesAndViews_visibilityChanged(bool visible);
+    void on_dockColumns_visibilityChanged(bool visible);
+    void on_dockForeignKeys_visibilityChanged(bool visible);
+    void on_dockIndexes_visibilityChanged(bool visible);
+    void on_dockTriggers_visibilityChanged(bool visible);
 
 private:
     Ui::MainWindow *ui;
@@ -38,7 +47,10 @@ private:
     void updateForeignKeys();
     void updateColumns();
     void updateTablesAndViewersModel();
-    bool openDb(const QString& name);
+    void hideOrShow(QWidget *w);
+    bool openDb(const QString &name);
+    bool openJson(const QString &name);
+    bool openPlist(const QString &name);
 
     QSqlDatabase db;
 

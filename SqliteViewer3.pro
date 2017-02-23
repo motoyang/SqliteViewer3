@@ -27,15 +27,15 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     jsonreader.cpp \
     plistreader.cpp \
-    mainframe.cpp
+    treeandeditform.cpp
 
 HEADERS  += mainwindow.h \
     jsonreader.h \
     plistreader.h \
-    mainframe.h
+    treeandeditform.h
 
 FORMS    += mainwindow.ui \
-    mainframe.ui
+    treeandeditform.ui
 
 RESOURCES += \
     SqliteViewer3.qrc
@@ -45,3 +45,6 @@ CONFIG -= c++11
 QMAKE_CXXFLAGS += -std=c++14
 
 ICON = sqliteDB.icns
+
+DISTFILES += \
+    Resources/tables_views_128x128.png
